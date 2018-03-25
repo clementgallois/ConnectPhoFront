@@ -9,11 +9,13 @@ export function loginSuccess() {
 
 
 export function logInUser(credentials) {
-  return dispatch => (sessionApi.login(credentials).then((response) => {
-    sessionStorage.setItem('jwt', response.token);
-    dispatch(loginSuccess());
-  }).catch((error) => {
-    throw (error);
-  })
-  );
+  return async (dispatch) => {
+    try {
+      const res = await sessionApi.login(credentials);
+      sessionStorage.setItem('jwt', res.token);
+      dispatch(loginSuccess());
+    } catch (error) {
+      throw (error);
+    }
+  };
 }
