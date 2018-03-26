@@ -15,7 +15,7 @@ const App = () => (
       <Navbar.Header>
         <Navbar.Brand>
           <a href="/">
-            <img src="/logopot2.png" alt="logo" />
+            <img src="/noodlelogo.png" alt="logo" />
             <span className="App-title">Connect Pho</span>
           </a>
         </Navbar.Brand>
