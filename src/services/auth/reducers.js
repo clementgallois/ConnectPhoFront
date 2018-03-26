@@ -1,13 +1,13 @@
 import { LOG_IN_SUCCESS } from './actions';
 
 const initialState = {
-  session: !!sessionStorage.jwt,
+  loggedIn: !!sessionStorage.jwt,
 };
 
-export default function sessionReducer(state = initialState.session, action) {
+export default function sessionReducer(state = initialState, action) {
   switch (action.type) {
     case LOG_IN_SUCCESS:
-      return !!sessionStorage.jwt;
+      return { ...state, loggedIn: !!sessionStorage.jwt };
     default:
       return state;
   }

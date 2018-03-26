@@ -18,7 +18,8 @@
             2,
             { "SwitchCase": 1 }
         ],
-"jsx-a11y/anchor-is-valid": [ "error", { "components": [ "Link" ], "specialLink": [ "to" ] } ],
-  "react/jsx-filename-extension": [1, { "extensions": [".js", ".js"] }]
+  "jsx-a11y/anchor-is-valid": [ "error", { "components": [ "Link" ], "specialLink": [ "to" ] } ],
+  "react/jsx-filename-extension": [1, { "extensions": [".js", ".js"] }],
+  "no-underscore-dangle": [2, { "allow": ["_id"] }]
 }
 }
