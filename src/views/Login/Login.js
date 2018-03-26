@@ -1,30 +1,31 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import * as sessionActions from '../../services/auth/actions';
 
-class LogInPage extends React.Component {
+import * as sessionActions from '../../services/auth/actions';
+import TextField from '../../components/TextField';
+
+import './Login.css';
+
+class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { credentials: { username: '', password: '' } };
+    this.state = { username: '', password: '' };
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
   }
 
   onChange(event) {
     const field = event.target.name;
-    const { credentials } = this.state;
-    credentials[field] = event.target.value;
-    return this.setState({ credentials });
+    return this.setState({ [field]: event.target.value });
   }
 
   onSave(e) {
     e.preventDefault();
-    this.props.actions.logInUser(this.state.credentials);
+    this.props.actions.logInUser(this.state);
   }
-
 
   render() {
     if (this.props.auth.loggedIn) {
@@ -35,37 +36,53 @@ class LogInPage extends React.Component {
       }
       />);
     }
-
     return (
-      <div>
+      <div className="form-container">
         <form>
-          <input
+          <TextField
+            label="Username:"
             name="username"
-            label="username"
-            value={this.state.credentials.username}
+            value={this.state.username}
+            placeholder="Enter username"
             onChange={this.onChange}
           />
-          <input
+          <TextField
+            label="Password:"
             name="password"
-            label="password"
-            type="password"
-            value={this.state.credentials.password}
+            value={this.state.password}
+            placeholder="Enter password"
             onChange={this.onChange}
+            password
           />
 
-          <input
-            type="submit"
-            className="btn btn-primary"
-            onClick={this.onSave}
-          />
+          <span>
+            <input
+              type="submit"
+              className="btn btn-primary login-button"
+              onClick={this.onSave}
+            />
+            {'No account yet ? '}
+            <Link to={{
+              pathname: '/register',
+              state: {
+                from: (this.props.location.state &&
+                                 this.props.location.state.from &&
+                                 this.props.location.state.from.pathname) || '/',
+              },
+            }}
+            >
+              {'Register'}
+            </Link>
+          </span>
         </form>
+
       </div>
 
     );
   }
 }
 
-LogInPage.propTypes = {
+Login.propTypes = {
   location: PropTypes.shape({
     state: PropTypes.object,
   }),
@@ -77,7 +94,7 @@ LogInPage.propTypes = {
   }).isRequired,
 };
 
-LogInPage.defaultProps = {
+Login.defaultProps = {
   location: PropTypes.shape({
     state: undefined,
   }),
@@ -95,4 +112,4 @@ function mapStateToProps({ auth }) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogInPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

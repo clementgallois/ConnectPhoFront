@@ -3,14 +3,16 @@ import { Switch, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 
 import {
-  LogInPage,
+  Login,
   Home,
+  Register,
 } from './views';
 
 const Main = () => (
   <Switch>
     <PrivateRoute exact path="/" component={Home} />
-    <Route path="/login" component={LogInPage} />
+    <Route path="/login" component={Login} />
+    <Route path="/Register" component={Register} />
   </Switch>
 );
 

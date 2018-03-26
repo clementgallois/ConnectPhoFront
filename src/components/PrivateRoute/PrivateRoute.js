@@ -21,7 +21,7 @@ const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => (
   />);
 
 PrivateRoute.propTypes = {
-  loggedIn: PropTypes.bool,
+  loggedIn: PropTypes.bool.isRequired,
   component: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
@@ -29,7 +29,6 @@ PrivateRoute.propTypes = {
 };
 
 PrivateRoute.defaultProps = {
-  loggedIn: false,
   location: null,
 };
 
