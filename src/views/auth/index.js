@@ -20,13 +20,14 @@ class LogInPage extends React.Component {
     return this.setState({ credentials });
   }
 
-  onSave() {
+  onSave(e) {
+    e.preventDefault();
     this.props.actions.logInUser(this.state.credentials);
   }
 
 
   render() {
-    if (sessionStorage.jwt) {
+    if (this.props.auth.loggedIn) {
       return (<Redirect to={
         (this.props.location.state &&
            this.props.location.state.from &&
@@ -71,11 +72,17 @@ LogInPage.propTypes = {
   actions: PropTypes.shape({
     logInUser: PropTypes.func.isRequired,
   }).isRequired,
+  auth: PropTypes.shape({
+    loggedIn: PropTypes.bool,
+  }),
 };
 
 LogInPage.defaultProps = {
   location: PropTypes.shape({
     state: undefined,
+  }),
+  auth: PropTypes.shape({
+    loggedIn: false,
   }),
 };
 
@@ -84,4 +91,11 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(sessionActions, dispatch),
   };
 }
-export default connect(null, mapDispatchToProps)(LogInPage);
+
+function mapStateToProps({ auth }) {
+  return {
+    auth,
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LogInPage);
