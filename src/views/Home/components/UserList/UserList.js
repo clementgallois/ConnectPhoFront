@@ -4,12 +4,16 @@ import { ListGroup, Panel } from 'react-bootstrap';
 
 import UserListItem from './UserListItem';
 
-const UserList = ({ userList, title }) => (
+const UserList = ({ userList, title, ...rest }) => (
   <Panel>
     <Panel.Heading>{title}</Panel.Heading>
     <ListGroup>
       {userList.map(el => (
-        <UserListItem user={el} key={el._id} />
+        <UserListItem
+          user={el}
+          key={el._id}
+          {...rest}
+        />
       ))}
     </ListGroup>
   </Panel>

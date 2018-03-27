@@ -1,4 +1,27 @@
 .user-list{
+  position:absolute;
+  right:0;
   width:15%;
   margin-right: 20px;
+}
+
+.main-panel{
+  width:45%;
+  height: 95%;
+  padding-bottom:20%;
+  margin:auto;
+}
+
+.first-tab{
+    margin-top: -1px;
+    margin-left: -1px;
+}
+
+.main-body{
+  flex:1;
+}
+
+.lobby-content{
+  margin:20px;
+    font-size: 1.5em;
 }
