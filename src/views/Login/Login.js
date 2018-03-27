@@ -45,6 +45,7 @@ class Login extends React.Component {
             value={this.state.username}
             placeholder="Enter username"
             onChange={this.onChange}
+            autoFocus
           />
           <TextField
             label="Password:"
