@@ -45,6 +45,7 @@ class Register extends React.Component {
             value={this.state.email}
             placeholder="Enter Email"
             onChange={this.onChange}
+            autoFocus
           />
           <TextField
             label="Username:"

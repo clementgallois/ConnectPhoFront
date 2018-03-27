@@ -1,0 +1,17 @@
+.list-group-item{
+  overflow: hidden;
+}
+.list-group-item img{
+  object-fit: cover;
+  height:60px;
+  border: 1px solid gray
+}
+
+.userName{
+  margin-left: 5px;
+  margin-top: 10px;
+}
+
+.userList-container{
+  height:60px
+}
