@@ -1,37 +1,22 @@
 import React from 'react';
-import io from 'socket.io-client';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Tabs, Tab, Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Tabs, Tab, Panel } from 'react-bootstrap';
 
-import * as lobbyActions from '../../services/lobby/actions';
+import * as socketActions from '../../services/socket/actions';
 import UserList from './components/UserList';
+import Lobby from './components/Lobby';
 
 import './Home.css';
 
 class Home extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.socket = io.connect('http://localhost:8080', { query: `token=${sessionStorage.jwt}` });
-    this.socket.on('USER_LIST', this.props.actions.createUserList);
-    this.socket.on('ADD_USER', this.props.actions.addUser);
-    this.socket.on('DEL_USER', this.props.actions.deleteUser);
-    this.socket.on('INVITE_RECEIVED', this.props.actions.inviteReceived);
-    this.socket.on('ROOM_JOINED', this.props.actions.addRoom);
-    this.socket.on('ERROR', console.log);
-    this.onClick = this.onClick.bind(this);
-    this.onUserClick = this.onUserClick.bind(this);
+    this.props.actions.createSocket('http://localhost:8080');
   }
 
-  onClick(room) {
-    this.socket.emit('JOIN_ROOM', { room });
-  }
-
-  onUserClick(id) {
-    this.socket.emit('INVITE', { to: id });
-  }
 
   render() {
     return (
@@ -39,24 +24,19 @@ class Home extends React.PureComponent {
         <div className="user-list pull-right" >
           <UserList
             title="Connected Users"
-            userList={this.props.lobby.userList}
-            onClick={this.onUserClick}
           />
         </div>
         <Panel className="main-panel">
-          <Tabs id="main-tab" defaultActiveKey="lobby" className="first-tab" animation={false} >
+          <Tabs id="main-tab" defaultActiveKey="lobby" className="tabs" animation={false} >
             <Tab eventKey="lobby" title="Lobby" >
-              <ListGroup className="lobby-content">
-                {this.props.lobby.invites.map(e => (
-                  <ListGroupItem key={`invites-${e.room}`}>
-                    <span>{e.from.username} invited you </span>
-                    <input type="button" value="accept" onClick={() => this.onClick(e.room)} />
-                  </ListGroupItem>
-                ))}
-              </ListGroup>
+              <Lobby />
             </Tab>
-            { this.props.lobby.rooms.map(e => (
-              <Tab key={e.room} eventKey={e.room} title={e.opponent.username} >
+            { this.props.rooms.map(e => (
+              <Tab
+                key={e._id}
+                eventKey={e._id}
+                title={e.isOwner ? e.opponent.id.username : e.owner.id.username}
+              >
                 coucou
               </Tab>
             )) }
@@ -69,28 +49,20 @@ class Home extends React.PureComponent {
 
 Home.propTypes = {
   actions: PropTypes.shape({
-    addUser: PropTypes.func.isRequired,
-    deleteUser: PropTypes.func.isRequired,
-    createUserList: PropTypes.func.isRequired,
-    inviteReceived: PropTypes.func.isRequired,
-    addRoom: PropTypes.func.isRequired,
+    createSocket: PropTypes.func.isRequired,
   }).isRequired,
-  lobby: PropTypes.shape({
-    userList: PropTypes.array.isRequired,
-    invites: PropTypes.array.isRequired,
-    rooms: PropTypes.array.isRequired,
-  }).isRequired,
+  rooms: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(lobbyActions, dispatch),
+    actions: bindActionCreators(socketActions, dispatch),
   };
 }
 
-function mapStateToProps({ lobby }) {
+function mapStateToProps({ rooms }) {
   return {
-    lobby,
+    rooms,
   };
 }
 

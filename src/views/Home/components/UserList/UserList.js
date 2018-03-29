@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ListGroup, Panel } from 'react-bootstrap';
+import { connect } from 'react-redux';
+
 
 import UserListItem from './UserListItem';
 
-const UserList = ({ userList, title, ...rest }) => (
+const UserList = ({ users, title, ...rest }) => (
   <Panel>
     <Panel.Heading>{title}</Panel.Heading>
     <ListGroup>
-      {userList.map(el => (
+      {users.map(el => (
         <UserListItem
           user={el}
           key={el._id}
@@ -20,7 +22,7 @@ const UserList = ({ userList, title, ...rest }) => (
 );
 
 UserList.propTypes = {
-  userList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
   title: PropTypes.string,
 };
 
@@ -28,4 +30,10 @@ UserList.defaultProps = {
   title: null,
 };
 
-export default UserList;
+
+function mapStateToProps({ users }) {
+  return {
+    users,
+  };
+}
+export default connect(mapStateToProps, null)(UserList);
