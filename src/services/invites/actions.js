@@ -9,3 +9,10 @@ export function addInvite(payload) {
 export function deleteInvite(payload) {
   return { type: DELETE_INVITE, payload };
 }
+
+export function acceptInvite(payload) {
+  return async (dispatch) => {
+    dispatch({ type: 'JOIN_ROOM', payload });
+    dispatch(deleteInvite(payload));
+  };
+}

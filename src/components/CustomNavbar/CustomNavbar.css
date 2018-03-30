@@ -1,0 +1,33 @@
+
+.CustomNavbar {
+  flex-shrink: 0;
+  padding:5px;
+  height:60px;
+  color: black;
+}
+.CustomNavbar .container{
+  width:auto;
+}
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+.navbar-brand>img {
+  width:70px;
+  padding: 7px 14px
+}
+
+.App-title {
+  font-size: 1.5em;
+  height:50%;
+}
+
+.notification{
+  margin-right: 5em;
+  border-radius: 50%;
+}
+
+.open .dropdown-toggle{
+    background-color: pink;
+    border-radius: 50%;
+}

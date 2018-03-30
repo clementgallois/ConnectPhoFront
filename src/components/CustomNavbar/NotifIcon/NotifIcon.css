@@ -1,0 +1,12 @@
+
+.notify-bubble {
+  position: absolute;
+  top: -2px;
+  left: 25px;
+  padding: 2px 5px 2px 6px;
+  background-color: #e6483e;
+  color: white;
+  font-size: 0.65em;
+  border-radius: 50%;
+  box-shadow: 1px 1px 1px gray;
+}

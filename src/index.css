@@ -13,26 +13,6 @@ html, body {
   flex-direction: column;
 }
 
-.App-Navbar {
-  flex-shrink: 0;
-  padding:5px;
-  height:60px;
-  color: black;
-}
-.navbar-brand {
-  display: flex;
-  align-items: center;
-}
-.navbar-brand>img {
-  width:70px;
-  padding: 7px 14px
-}
-
-.App-title {
-  font-size: 1.5em;
-  height:50%;
-}
-
 .App-main{
   display:flex;
   height:100%;
